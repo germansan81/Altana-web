@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>ALTANA — Altura con Alma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:   #0d4d3d;
+    --green-line:   #1a6b56;
+    --olive:        #869a5a;
+    --gold:         #d9c15a;
+    --gold-bright:  #e3c94a;
+    --cream:        #f3efd8;
+    --cream-dim:    #cfd6c6;
+    --terracotta:   #c9430f;
+    --terracotta-lt:#f1440e;
+    --black-line:   rgba(255,255,255,0.14);
+  }
+
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+  body{
+    margin:0;
+    background:var(--green-deep);
+    background-image:
+      radial-gradient(circle at 15% 8%, rgba(255,255,255,0.05), transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(0,0,0,0.25), transparent 45%);
+    color:var(--cream);
+    font-family:'EB Garamond', serif;
+    min-height:100vh;
+  }
+
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:0 0 60px;
+    position:relative;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:linear-gradient(180deg, var(--green-deep) 78%, rgba(13,77,61,0));
+    padding:18px 22px 10px;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid var(--black-line);
+  }
+  .brandmark{ display:flex; align-items:center; gap:10px; }
+  .brandmark svg{ width:30px; height:30px; flex-shrink:0; }
+  .brandmark span{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:600;
+    font-size:22px; letter-spacing:0.5px; color:var(--gold-bright);
+  }
+
+  .lang-toggle{
+    display:flex; border:1px solid var(--olive); border-radius:999px; overflow:hidden;
+    font-family:'EB Garamond', serif; font-size:13px; letter-spacing:1.5px;
+  }
+  .lang-toggle button{
+    background:transparent; border:none; color:var(--cream-dim);
+    padding:6px 14px; cursor:pointer; font-family:inherit; font-size:inherit;
+    letter-spacing:inherit; text-transform:uppercase;
+    transition:background .25s ease, color .25s ease;
+  }
+  .lang-toggle button.active{
+    background:var(--gold-bright); color:var(--green-deep); font-weight:600;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    text-align:center;
+    padding:38px 24px 26px;
+  }
+  .hero .eyebrow{
+    text-transform:uppercase; letter-spacing:4px; font-size:11px;
+    color:var(--olive); margin-bottom:14px;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif; font-optical-sizing:auto;
+    font-weight:600; font-style:italic;
+    font-size:clamp(40px,11vw,58px);
+    margin:0; color:var(--cream);
+    line-height:0.95;
+  }
+  .hero .tagline{
+    margin-top:14px; font-style:italic; color:var(--gold-bright);
+    font-size:16px; letter-spacing:0.3px;
+  }
+  .hero .place{
+    margin-top:6px; font-size:12px; letter-spacing:2px; text-transform:uppercase;
+    color:var(--cream-dim);
+  }
+
+  .divider{
+    display:flex; align-items:center; gap:14px;
+    margin:0 24px 6px;
+  }
+  .divider::before, .divider::after{
+    content:''; flex:1; height:1px; background:var(--black-line);
+  }
+  .divider svg{ width:20px; height:20px; opacity:0.75; flex-shrink:0; }
+
+  /* ---------- Category nav (quick jump) ---------- */
+  .catnav{
+    display:flex; gap:8px; overflow-x:auto; padding:18px 22px 4px;
+    scrollbar-width:none;
+  }
+  .catnav::-webkit-scrollbar{ display:none; }
+  .catnav a{
+    flex-shrink:0; text-decoration:none; color:var(--cream-dim);
+    border:1px solid var(--black-line); border-radius:999px;
+    padding:7px 16px; font-size:13px; letter-spacing:0.5px;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .catnav a:hover, .catnav a:active{ border-color:var(--gold-bright); color:var(--gold-bright); }
+
+  /* ---------- Sections ---------- */
+  section.category{
+    padding:36px 24px 8px;
+    scroll-margin-top:74px;
+  }
+  .cat-head{
+    text-align:center; margin-bottom:26px;
+  }
+  .cat-head h2{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:600;
+    color:var(--gold-bright);
+    font-size:clamp(26px,6vw,32px);
+    margin:0 0 4px;
+  }
+  .cat-head p{
+    margin:0; font-size:13px; color:var(--olive); letter-spacing:0.4px; font-style:italic;
+  }
+
+  .item{
+    display:flex; justify-content:space-between; align-items:baseline;
+    gap:14px; padding:16px 0;
+    border-bottom:1px solid var(--black-line);
+  }
+  .item:last-child{ border-bottom:none; }
+  .item-text{ flex:1; }
+  .item-name{
+    font-size:18px; color:var(--cream); font-weight:500;
+    letter-spacing:0.2px;
+  }
+  .item-desc{
+    font-size:14.5px; color:var(--cream-dim); margin-top:4px;
+    font-style:italic; line-height:1.4;
+  }
+  .item-price{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:500;
+    color:var(--gold-bright); font-size:17px; white-space:nowrap;
+  }
+
+  /* ---------- Footer / QR ---------- */
+  footer{
+    margin-top:50px; padding:40px 24px 10px;
+    text-align:center; border-top:1px solid var(--black-line);
+  }
+  footer .foot-note{
+    font-style:italic; font-size:15px; color:var(--gold-bright); margin-bottom:22px;
+  }
+  #qrcode{
+    display:inline-block; padding:12px; background:var(--cream);
+    border-radius:10px; line-height:0;
+  }
+  footer .qr-caption{
+    margin-top:14px; font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--cream-dim);
+  }
+  footer .signature{
+    margin-top:36px; font-size:11px; color:rgba(243,239,216,0.35); letter-spacing:0.5px;
+  }
+
+  @media (max-width:380px){
+    .item-name{ font-size:16.5px; }
+    .hero h1{ font-size:44px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brandmark">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M28 78 C28 78 34 62 34 50 C34 40 40 34 46 34" stroke="#e3c94a" stroke-width="6" stroke-linecap="round"/>
+        <path d="M34 78 L62 28" stroke="#e3c94a" stroke-width="6" stroke-linecap="round"/>
+        <path d="M62 28 L78 78" stroke="#e3c94a" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="72" cy="34" r="5" fill="#e3c94a"/>
+      </svg>
+      <span>Altana</span>
+    </div>
+    <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+      <button type="button" data-lang="es" class="active">ES</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="eyebrow">Rooftop &middot; Bar &middot; Restaurante</div>
+    <h1>Altana</h1>
+    <div class="tagline" data-es="Altura con Alma" data-en="Height with Soul">Altura con Alma</div>
+    <div class="place">Laureles, Medellín</div>
+  </div>
+
+  <div class="divider">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M28 78 C28 78 34 62 34 50 C34 40 40 34 46 34" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <path d="M34 78 L62 28" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <path d="M62 28 L78 78" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="72" cy="34" r="6" fill="#d9c15a"/>
+    </svg>
+  </div>
+
+  <nav class="catnav" id="catnav">
+    <a href="#coctel" data-es="Coctelería" data-en="Cocktails">Coctelería</a>
+    <a href="#mar" data-es="Del Mar" data-en="From the Sea">Del Mar</a>
+    <a href="#compartir" data-es="Para Compartir" data-en="To Share">Para Compartir</a>
+    <a href="#fuertes" data-es="Platos Fuertes" data-en="Mains">Platos Fuertes</a>
+    <a href="#dulce" data-es="Dulce Final" data-en="Sweet Ending">Dulce Final</a>
+  </nav>
+
+  <!-- ===================== COCTELERÍA ===================== -->
+  <section class="category" id="coctel">
+    <div class="cat-head">
+      <h2 data-es="Coctelería" data-en="Cocktails">Coctelería</h2>
+      <p data-es="Una copa que se repite, sin prisa." data-en="A glass poured again, unhurried.">Una copa que se repite, sin prisa.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name">Espresso Martini</div>
+        <div class="item-desc" data-es="Vodka, café espresso, licor de café" data-en="Vodka, espresso, coffee liqueur">Vodka, café espresso, licor de café</div>
+      </div>
+      <div class="item-price">$38.000</div>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Altana Sour" data-en="Altana Sour">Altana Sour</div>
+        <div class="item-desc" data-es="Whisky, cítricos de la casa, clara de huevo" data-en="Whisky, house citrus, egg white">Whisky, cítricos de la casa, clara de huevo</div>
+      </div>
+      <div class="item-price">$42.000</div>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Negroni de Altura" data-en="Rooftop Negroni">Negroni de Altura</div>
+        <div class="item-desc" data-es="Gin, Campari, vermú rojo, naranja" data-en="Gin, Campari, sweet vermouth, orange">Gin, Campari, vermú rojo, naranja</div>
+      </div>
+      <div class="item-price">$40.000</div>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Copa de la Casa" data-en="House Pour">Copa de la Casa</div>
+        <div class="item-desc" data-es="Espumante, licor de flor de saúco, toronja" data-en="Sparkling wine, elderflower liqueur, grapefruit">Espumante, licor de flor de saúco, toronja</div>
+      </div>
+      <div class="item-price">$36.000</div>
+    </div>
+  </section>
+
+  <div class="divider">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M28 78 C28 78 34 62 34 50 C34 40 40 34 46 34" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <path d="M34 78 L62 28" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <path d="M62 28 L78 78" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="72" cy="34" r="6" fill="#d9c15a"/>
+    </svg>
+  </div>
+
+  <!-- ===================== DEL MAR ===================== -->
+  <section class="category" id="mar">
+    <div class="cat-head">
+      <h2 data-es="Del Mar" data-en="From the Sea">Del Mar</h2>
+      <p data-es="Frescura servida con criterio." data-en="Freshness, served with intention.">Frescura servida con criterio.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Ostras de la Casa (6 un.)" data-en="House Oysters (6 pcs)">Ostras de la Casa (6 un.)</div>
+        <div class="item-desc" data-es="Mignonette de vino tinto, limón" data-en="Red wine mignonette, lemon">Mignonette de vino tinto, limón</div>
+      </div>
+      <div class="item-price">$58.000</div>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Tartar de Atún" data-en="Tuna Tartare">Tartar de Atún</div>
+        <div class="item-desc" data-es="Aguacate, ajonjolí, soya, aceite de sésamo" data-en="Avocado, sesame, soy, sesame oil">Aguacate, ajonjolí, soya, aceite de sésamo</div>
+      </div>
+      <div class="item-price">$48.000</div>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Ceviche Altana" data-en="Altana Ceviche">Ceviche Altana</div>
+        <div class="item-desc" data-es="Pescado blanco, leche de tigre cítrica, camote" data-en="White fish, citrus tiger's milk, sweet potato">Pescado blanco, leche de tigre cítrica, camote</div>
+      </div>
+      <div class="item-price">$45.000</div>
+    </div>
+  </section>
+
+  <div class="divider">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M28 78 C28 78 34 62 34 50 C34 40 40 34 46 34" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <path d="M34 78 L62 28" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <path d="M62 28 L78 78" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="72" cy="34" r="6" fill="#d9c15a"/>
+    </svg>
+  </div>
+
+  <!-- ===================== PARA COMPARTIR ===================== -->
+  <section class="category" id="compartir">
+    <div class="cat-head">
+      <h2 data-es="Para Compartir" data-en="To Share">Para Compartir</h2>
+      <p data-es="La mesa se alarga, la conversación pesa." data-en="The table stretches, conversation lingers.">La mesa se alarga, la conversación pesa.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Pulpo a la Brasa" data-en="Charred Octopus">Pulpo a la Brasa</div>
+        <div class="item-desc" data-es="Puré de papa criolla, chimichurri ahumado" data-en="Creole potato purée, smoked chimichurri">Puré de papa criolla, chimichurri ahumado</div>
+      </div>
+      <div class="item-price">$62.000</div>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Croquetas de Jamón Ibérico" data-en="Ibérico Ham Croquettes">Croquetas de Jamón Ibérico</div>
+        <div class="item-desc" data-es="Bechamel trufada (6 un.)" data-en="Truffled béchamel (6 pcs)">Bechamel trufada (6 un.)</div>
+      </div>
+      <div class="item-price">$36.000</div>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Tacos de Short Rib" data-en="Short Rib Tacos">Tacos de Short Rib</div>
+        <div class="item-desc" data-es="Costilla braseada, cebolla encurtida, salsa verde (3 un.)" data-en="Braised short rib, pickled onion, salsa verde (3 pcs)">Costilla braseada, cebolla encurtida, salsa verde (3 un.)</div>
+      </div>
+      <div class="item-price">$44.000</div>
+    </div>
+  </section>
+
+  <div class="divider">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M28 78 C28 78 34 62 34 50 C34 40 40 34 46 34" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <path d="M34 78 L62 28" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <path d="M62 28 L78 78" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="72" cy="34" r="6" fill="#d9c15a"/>
+    </svg>
+  </div>
+
+  <!-- ===================== PLATOS FUERTES ===================== -->
+  <section class="category" id="fuertes">
+    <div class="cat-head">
+      <h2 data-es="Platos Fuertes" data-en="Mains">Platos Fuertes</h2>
+      <p data-es="Fuego, producto y memoria." data-en="Fire, ingredient, memory.">Fuego, producto y memoria.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Lomo de Res a la Parrilla" data-en="Grilled Beef Tenderloin">Lomo de Res a la Parrilla</div>
+        <div class="item-desc" data-es="Puré trufado, vegetales de temporada, jus de la casa" data-en="Truffled purée, seasonal vegetables, house jus">Puré trufado, vegetales de temporada, jus de la casa</div>
+      </div>
+      <div class="item-price">$98.000</div>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Salmón a la Brasa" data-en="Charred Salmon">Salmón a la Brasa</div>
+        <div class="item-desc" data-es="Risotto de limón, espárragos, mantequilla de hierbas" data-en="Lemon risotto, asparagus, herb butter">Risotto de limón, espárragos, mantequilla de hierbas</div>
+      </div>
+      <div class="item-price">$74.000</div>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Costillas de Cerdo Glaseadas" data-en="Glazed Pork Ribs">Costillas de Cerdo Glaseadas</div>
+        <div class="item-desc" data-es="Glaseado de tamarindo, ensalada de repollo morado" data-en="Tamarind glaze, purple cabbage slaw">Glaseado de tamarindo, ensalada de repollo morado</div>
+      </div>
+      <div class="item-price">$82.000</div>
+    </div>
+  </section>
+
+  <div class="divider">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M28 78 C28 78 34 62 34 50 C34 40 40 34 46 34" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <path d="M34 78 L62 28" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <path d="M62 28 L78 78" stroke="#d9c15a" stroke-width="7" stroke-linecap="round"/>
+      <circle cx="72" cy="34" r="6" fill="#d9c15a"/>
+    </svg>
+  </div>
+
+  <!-- ===================== DULCE FINAL ===================== -->
+  <section class="category" id="dulce">
+    <div class="cat-head">
+      <h2 data-es="Dulce Final" data-en="Sweet Ending">Dulce Final</h2>
+      <p data-es="Para quedarse un poco más." data-en="A reason to stay a little longer.">Para quedarse un poco más.</p>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name">Tiramisú</div>
+        <div class="item-desc" data-es="Receta clásica, café y cacao amargo" data-en="Classic recipe, coffee and bitter cocoa">Receta clásica, café y cacao amargo</div>
+      </div>
+      <div class="item-price">$28.000</div>
+    </div>
+
+    <div class="item">
+      <div class="item-text">
+        <div class="item-name" data-es="Cheesecake de Maracuyá" data-en="Passion Fruit Cheesecake">Cheesecake de Maracuyá</div>
+        <div class="item-desc" data-es="Base de galleta especiada, coulis de maracuyá" data-en="Spiced cookie crust, passion fruit coulis">Base de galleta especiada, coulis de maracuyá</div>
+      </div>
+      <div class="item-price">$26.000</div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-note" data-es="Todo se eleva, todo se ve distinto." data-en="Everything rises. Everything looks different.">Todo se eleva, todo se ve distinto.</div>
+    <div id="qrcode"></div>
+    <div class="qr-caption" data-es="Escanea para volver a esta carta" data-en="Scan to return to this menu">Escanea para volver a esta carta</div>
+    <div class="signature">ALTANA · Laureles, Medellín</div>
+  </footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  // ---------- Language toggle ----------
+  const langButtons = document.querySelectorAll('.lang-toggle button');
+  function setLang(lang){
+    document.querySelectorAll('[data-es]').forEach(el=>{
+      const text = el.getAttribute('data-' + lang);
+      if(text !== null) el.textContent = text;
+    });
+    langButtons.forEach(b=> b.classList.toggle('active', b.dataset.lang === lang));
+    document.documentElement.lang = lang;
+    try{ localStorage.setItem('altana-lang', lang); }catch(e){}
+  }
+  langButtons.forEach(btn=>{
+    btn.addEventListener('click', ()=> setLang(btn.dataset.lang));
+  });
+  // default language: Spanish (menu content is already ES in markup)
+
+  // ---------- QR code pointing at this page's own URL ----------
+  // This means: once you host this file at a fixed URL and print that QR,
+  // the code never needs to change again — only this file's content does.
+  try{
+    new QRCode(document.getElementById("qrcode"), {
+      text: window.location.href,
+      width: 148,
+      height: 148,
+      colorDark: "#0d4d3d",
+      colorLight: "#f3efd8",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }catch(e){
+    document.getElementById('qrcode').textContent = 'QR unavailable offline';
+  }
+</script>
+</body>
+</html>
